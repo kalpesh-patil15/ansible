@@ -1,0 +1,26 @@
+---
+- name: Install and configure Apache HTTP Server
+  hosts: demo
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install Apache HTTP Server
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - httpd
+
+    - name: Start Apache service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - httpd
+
+    - name: Configure Apache to start on boot (for Debian-based systems)
+      service:
+        name: httpd
+        enabled: yes
+        masked: no
