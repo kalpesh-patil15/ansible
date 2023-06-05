@@ -1,0 +1,22 @@
+---
+- name: Install Packages
+  hosts: demo
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Install httpd package on Amazon Linux or CentOS
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution in ['Amazon', 'CentOS']
+
+    - name: Install httpd package on Debian or Ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: ansible_distribution in ['Debian', 'Ubuntu']
+     
+    - name: Start httpd service
+      service:
+        name: "{{ 'httpd' if ansible_distribution in ['Amazon', 'CentOS'] else 'apache2' }}"
+        state: started
