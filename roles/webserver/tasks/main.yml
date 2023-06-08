@@ -1,0 +1,21 @@
+---
+- name: Install Apache HTTPD
+  package:
+    name: "{{ 'apache2' if ansible_distribution == 'Ubuntu' else 'httpd' }}"
+    state: present
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat' or ansible_os_famliy == 'Amazon Linux'
+
+- name: Start and enable Apache HTTPD
+  service:
+    name: "{{ 'apache2' if ansible_distribution == 'Ubuntu' else 'httpd' }}"
+    state: started
+    enabled: true
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat' or  ansible_os_famliy == 'Amazon Linux'
+
+
+- name: Deploy hello world website
+  template:
+    src: index.html.j2
+    dest: "/var/www/html/index.html" 
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat' or ansible_os_family == 'Amazon Linux'
+

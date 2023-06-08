@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Website</title>
+</head>
+<body>
+  {% if ansible_os_family == 'Debian' %}
+  <h1>Hello world..!! Welcome to Debian</h1>
+  {% elif ansible_os_family == 'RedHat' %}
+  <h1>Hello world..!! Welcome to Redhat</h1>
+  {% elif ansible_os_family == 'Amazon' %}
+  <h1>Hello world..!! Welcome to Amazon Linux</h1>
+  {% else %}
+  <h1>Hello world..!! Welcome to {{ ansible_distribution }}</h1>
+  {% endif %}
+</body>
+</html>
